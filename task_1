@@ -1,0 +1,48 @@
+//Task_1
+
+
+#include <iostream>
+#include <stack>
+#include <unordered_map>
+using namespace std;
+
+bool isValid(string s) {
+    stack<char> st;
+    unordered_map<char, char> bracketMap = {
+        {')', '('},
+        {']', '['},
+        {'}', '{'}
+    };
+
+    for (char characters : s) {
+        // If closing bracket
+        if (bracketMap.find(characters) != bracketMap.end()) {
+       //if the stack is not empty and the top matches the corresponding opening bracket
+            if (!st.empty() && st.top() == bracketMap[characters]) {
+                st.pop();// Pop matching opening bracket
+            } else {
+                return false; // stack is empty or Not matched
+            }
+        } else {
+            
+            st.push(characters);// If opening bracket, push it onto the stack
+        }
+    }
+    // If stack is empty then all brackets were matched correctly
+    return st.empty();
+}
+
+int main() {
+    string input;
+    
+    cout << "Input: ";
+    cin >> input;
+
+    cout << boolalpha; //output
+    cout << "Output: " << isValid(input) << endl;
+
+    return 0;
+}
+
+//Time Complexity: O(n)
+//Space Complexity: O(n)
